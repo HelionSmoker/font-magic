@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="generateFont.js"></script>
+    <title>Character Dimension Form</title>
+</head>
+
+<body>
+    <form>
+        <h1>Character Dimension</h1>
+        <div id="labels-container">
+            <label for="height">Height</label>
+            <select id="height" name="height"></select>
+            <label for="width">Width</label>
+            <select id="width" name="width"></select>
+            <button id="dimension-form-submit" type="button" onclick="submitDimensionsForm()">Submit</button>
+        </div>
+    </form>
+    <main></main>
+    <div id="add-char-container">
+        <button id="add-char-button" onclick="submitDimensionsForm()">New char</button>
+    </div>
+</body>
+
+</html>
