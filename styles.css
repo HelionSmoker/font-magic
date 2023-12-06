@@ -1,19 +1,19 @@
 :root {
     /** CSS DARK THEME PRIMARY COLORS */
-    --color-primary-100: #ffc107;
+    --color-primary-100: #ffc105;
     --color-primary-200: #ffc83b;
-    --color-primary-300: #ffce58;
+    --color-primary-300: #ffcd57;
     --color-primary-400: #ffd572;
     --color-primary-500: #ffdc8a;
     --color-primary-600: #ffe3a2;
 
     /** CSS DARK THEME MIXED SURFACE COLORS */
     --color-surface-mixed-100: #272116;
-    --color-surface-mixed-200: #3c362b;
+    --color-surface-mixed-200: #3c362a;
     --color-surface-mixed-300: #514c42;
     --color-surface-mixed-400: #68635a;
     --color-surface-mixed-500: #7f7b73;
-    --color-surface-mixed-600: #98948e;
+    --color-surface-mixed-600: #c0bbb4;
 }
 
 * {
@@ -104,40 +104,29 @@ section {
     font-size: 12px;
 }
 
-.checkbox-container {
+.counters-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     background-color: var(--color-surface-mixed-300);
+    gap: 10px;
+    padding: 15px;
     margin-left: 35px;
     border-collapse: collapse;
     border-radius: 10px;
     overflow: hidden;
 }
 
-input[type="checkbox"] {
-    /* Remove most all native input styles */
-    appearance: none;
-    /* Not removed via appearance */
-    width: 25px;
-    height: 25px;
-    margin: 10px;
-    border: 2px solid var(--color-surface-mixed-600);
-    border-radius: 3px;
-    display: grid;
-    place-content: center;
-}
-
-input[type="checkbox"]::before {
-    content: "";
-    width: 23px;
-    height: 23px;
-    transform: scale(0);
-    transition: 120ms transform ease-in-out;
-    box-shadow: inset 20px 23px var(--color-primary-500);
-}
-
-input[type="checkbox"]:checked::before {
-    transform: scale(1);
+.bit-counter {
+    color: rgb(214, 210, 210);
+    display: flex;
+    justify-content: center;
+    background-color: var(--color-surface-mixed-400);
+    cursor: pointer;
+    padding: 5px 15px;
+    width: 40px;
+    max-width: 40px;
+    border: none;
+    border-radius: 5px;
 }
 
 .close-button {
@@ -158,7 +147,8 @@ input[type="checkbox"]:checked::before {
     margin-bottom: 30px
 }
 
-.action-button{
+.low-priority-button,
+.high-priority-button{
     padding: 5px 15px;
     margin-left: 10px;
     cursor: pointer;
