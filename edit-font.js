@@ -1,3 +1,6 @@
+// Yellow to gray
+const COLORS = generateColorBridge([255, 205, 87], [104, 99, 90], 4);
+
 function copy(text) {
 	navigator.clipboard.writeText(text).then(
 		function () {
@@ -14,6 +17,25 @@ function showButtonSuccess(button, originalContent, successMsg = "Success!") {
 	setTimeout(() => {
 		button.textContent = originalContent;
 	}, 1000);
+}
+
+function interpolate(start, end, step, totalSteps) {
+	return start + ((end - start) * step) / totalSteps;
+}
+
+function generateColorBridge(rgb1, rgb2, steps) {
+	let colorBridge = [`rgb(${rgb2.join(",")})`];
+
+	for (let step = 0; step <= steps; step++) {
+		let interpolatedColor = [
+			Math.round(interpolate(rgb1[0], rgb2[0], step, steps)),
+			Math.round(interpolate(rgb1[1], rgb2[1], step, steps)),
+			Math.round(interpolate(rgb1[2], rgb2[2], step, steps)),
+		];
+		colorBridge.push(`rgb(${interpolatedColor.join(", ")})`);
+	}
+
+	return colorBridge;
 }
 
 function generateOptions(selectId, lowerBound, upperBound) {
@@ -35,38 +57,84 @@ function restrictCharLength(element) {
 	});
 }
 
-function addCharEditor() {
-	const main = document.getElementsByTagName("main")[0];
-	const section = document.createElement("section");
-	const [width, height] = getDimensions();
+function createCharInput() {
+	const result = document.createElement("input");
+	
+	result.classList.add("char-input");
+	result.placeholder = "ch";
+	restrictCharLength(result);
+	
+	return result;
+}
 
-	const charInput = document.createElement("input");
-	charInput.classList.add("char-input");
-	charInput.placeholder = "ch";
-	restrictCharLength(charInput);
-
-	const checkboxContainer = document.createElement("div");
-	checkboxContainer.classList.add("checkbox-container");
-	checkboxContainer.style = `grid-template-columns: repeat(${width}, 1fr)`;
-
-	const removeButton = document.createElement("button");
-	removeButton.classList.add("close-button");
-	removeButton.textContent = "X";
-	removeButton.onclick = function () {
+function createRemoveButton() {
+	const result = document.createElement("button");
+	
+	result.classList.add("close-button");
+	result.textContent = "X";
+	result.onclick = function () {
 		this.parentElement.parentElement.removeChild(this.parentElement);
 	};
 
+	return result;
+}
+
+function createCounter(colorOptionCount) {
+	const result = document.createElement("button");
+	let counter = 0;
+
+	result.textContent = counter;
+	result.classList.add("bit-counter")
+
+	result.addEventListener("mousedown", function (event) {
+		if (event.button === 2) {
+			// Right mouse button
+			if (counter - 1 >= 0) {
+				counter--;
+			}
+		} else if (event.button === 0) {
+			// Left mouse button
+			counter++;
+		}
+
+		result.textContent = counter;
+		result.style.backgroundColor = COLORS[counter % colorOptionCount];
+
+		let color = counter % colorOptionCount > 0 ? "black" : "white";
+		result.style.color = color;
+	});
+
+	// Prevent context menu on right-click
+	result.addEventListener("contextmenu", function (event) {
+		event.preventDefault();
+	});
+
+	return result
+}
+
+function createCountersContainer() {
+	const result = document.createElement("div");
+	const [width, height] = getDimensions();
+
+	result.classList.add("counters-container");
+	result.style = `grid-template-columns: repeat(${width}, 1fr)`;
+
 	for (let i = 0; i < height; i++) {
 		for (let j = 0; j < width; j++) {
-			const bitInput = document.createElement("input");
-			bitInput.type = "checkbox";
-			checkboxContainer.appendChild(bitInput);
+			result.appendChild(createCounter(COLORS.length));
 		}
 	}
 
-	section.appendChild(removeButton);
-	section.appendChild(charInput);
-	section.appendChild(checkboxContainer);
+	return result
+}
+
+function addCharEditor() {
+	const main = document.getElementsByTagName("main")[0];
+	const section = document.createElement("section");
+
+	section.appendChild(createRemoveButton());
+	section.appendChild(createCharInput());
+	section.appendChild(createCountersContainer());
 	main.appendChild(section);
 }
 
@@ -84,14 +152,13 @@ function exportFont() {
 	let font = {};
 
 	sections.forEach((section) => {
-		const inputs = section.querySelectorAll("input");
-		const char = inputs[0].value;
+		const char = section.querySelector("input").value;
+		const counters = section.querySelectorAll(".bit-counter");
 		font[char] = Array.from({ length: height }, () => Array(width).fill(0));
 
 		for (let i = 0; i < height; i++) {
 			for (let j = 0; j < width; j++) {
-				// Add 1, since 'char' is the first input
-				font[char][i][j] = Number(inputs[(i * width + j, 1)].checked);
+				font[char][i][j] = counters[i * width + j].textContent;
 			}
 		}
 	});
@@ -103,7 +170,7 @@ function exportFont() {
 }
 
 function main() {
-	generateOptions("height", 3, 20);
+	generateOptions("height", 4, 20);
 	generateOptions("width", 3, 20);
 }
 
