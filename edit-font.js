@@ -1,3 +1,21 @@
+function copy(text) {
+	navigator.clipboard.writeText(text).then(
+		function () {
+			console.log(`Copied: ${text}`);
+		},
+		function (err) {
+			console.error("Could not copy text: ", err);
+		}
+	);
+}
+
+function showButtonSuccess(button, originalContent, successMsg = "Success!") {
+	button.textContent = successMsg;
+	setTimeout(() => {
+		button.textContent = originalContent;
+	}, 1000);
+}
+
 function generateOptions(selectId, lowerBound, upperBound) {
 	const selectElement = document.getElementById(selectId);
 
@@ -62,11 +80,26 @@ function importFont() {}
 
 function exportFont() {
 	const sections = [...document.getElementsByTagName("section")];
-	sections.forEach(section => {
+	const [width, height] = getDimensions();
+	let font = {};
+
+	sections.forEach((section) => {
 		const inputs = section.querySelectorAll("input");
-		const char = inputs[0];
-		console.log(char, inputs[1])
-	})
+		const char = inputs[0].value;
+		font[char] = Array.from({ length: height }, () => Array(width).fill(0));
+
+		for (let i = 0; i < height; i++) {
+			for (let j = 0; j < width; j++) {
+				// Add 1, since 'char' is the first input
+				font[char][i][j] = Number(inputs[(i * width + j, 1)].checked);
+			}
+		}
+	});
+
+	copy(JSON.stringify(font, null));
+
+	const exportButton = document.getElementById("export-button");
+	showButtonSuccess(exportButton, "Export");
 }
 
 function main() {
