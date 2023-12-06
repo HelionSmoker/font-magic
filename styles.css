@@ -75,22 +75,6 @@ h1 {
     margin: 0 auto;
 }
 
-#dimension-form-submit {
-    color: black;
-    background-color: var(--color-primary-300);
-    padding: 5px 15px;
-    margin-left: 10px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: 12px;
-    border-radius: 10px;
-    border: none;
-}
-
-#dimension-form-submit:active {
-    background-color: var(--color-primary-500);
-}
-
 section {
     position: relative;
     display: flex;
@@ -99,8 +83,7 @@ section {
     background-color: var(--color-surface-mixed-200);
     margin: 20px 10px;
     padding: 20px;
-    max-width: 80vw;
-    /* min-width: 300px; */
+    max-width: 70vw;
     border-radius: 15px;
 }
 
@@ -128,6 +111,7 @@ section {
     margin-left: 35px;
     border-collapse: collapse;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 input[type="checkbox"] {
@@ -156,26 +140,6 @@ input[type="checkbox"]:checked::before {
     transform: scale(1);
 }
 
-#add-char-container {
-    display: none;
-    justify-content: center;
-    margin-bottom: 30px
-}
-
-#add-char-button {
-    color: white;
-    background-color: var(--color-surface-mixed-400);
-    padding: 5px 15px;
-    cursor: pointer;
-    border-radius: 10px;
-    border: none;
-    text-transform: uppercase;
-}
-
-#add-char-button:focus {
-    background-color: var(--color-surface-mixed-600);
-}
-
 .close-button {
     background-color: var(--color-surface-mixed-500);
     color: white;
@@ -186,4 +150,45 @@ input[type="checkbox"]:checked::before {
     border-radius: 4px;
     top: 10px;
     right: -40px;
+}
+
+#buttons-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px
+}
+
+.action-button{
+    padding: 5px 15px;
+    margin-left: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 12px;
+    border-radius: 10px;
+    border: none;
+}
+
+.high-priority-button {
+    color: black;
+    background-color: var(--color-primary-300);
+}
+
+.high-priority-button:hover {
+    background-color: var(--color-primary-500);
+}
+
+.high-priority-button:active {
+    background-color: var(--color-primary-400);
+}
+
+.low-priority-button {
+    background-color: var(--color-primary-500);
+}
+
+.low-priority-button:hover {
+    background-color: var(--color-primary-400);
+}
+
+.low-priority-button:active {
+    background-color: var(--color-primary-300);
 }
