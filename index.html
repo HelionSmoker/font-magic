@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <script src="generateFont.js"></script>
     <title>Character Dimension Form</title>
 </head>
 
@@ -17,13 +16,15 @@
             <select id="height" name="height"></select>
             <label for="width">Width</label>
             <select id="width" name="width"></select>
-            <button id="dimension-form-submit" type="button" onclick="submitDimensionsForm()">Submit</button>
+            <button class="action-button low-priority-button" type="button" onclick="importFont()">Import</button>
         </div>
     </form>
     <main></main>
-    <div id="add-char-container">
-        <button id="add-char-button" onclick="submitDimensionsForm()">New char</button>
+    <div id="buttons-container">
+        <button class="action-button high-priority-button" type="button" onclick="submitDimensionsForm()">Add Char</button>
+        <button class="action-button high-priority-button" type="button" onclick="exportFont()">Export</button>
     </div>
+    <script src="edit-font.js"></script>
 </body>
 
 </html>
