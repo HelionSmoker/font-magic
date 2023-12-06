@@ -1,7 +1,7 @@
-function generateOptions(selectId) {
+function generateOptions(selectId, lowerBound, upperBound) {
 	const selectElement = document.getElementById(selectId);
 
-	for (let i = 3; i <= 20; i++) {
+	for (let i = lowerBound; i <= upperBound; i++) {
 		const option = document.createElement("option");
 		option.value = i;
 		option.textContent = i;
@@ -70,8 +70,8 @@ function exportFont() {
 }
 
 function main() {
-	generateOptions("height");
-	generateOptions("width");
+	generateOptions("height", 3, 20);
+	generateOptions("width", 3, 20);
 }
 
 main();
